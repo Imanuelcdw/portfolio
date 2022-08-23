@@ -6,9 +6,13 @@ dotenv.config()
 const app = express()
 const port = process.env.PORT || 3000
 
-const start = () => {
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+app.use(express.static('public'))
+
+const start = async () => {
   try {
-    app.listen(() => console.log('Success'))
+    app.listen(port, () => console.log(`App listening to port ${port}`))
   } catch (error) {
     console.log(error)
   }
