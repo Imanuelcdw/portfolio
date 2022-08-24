@@ -31,7 +31,7 @@ class ProjectController {
     const { slug } = req.params
     const { body, files } = req
     delete body.image
-    if (files || files.length > 0) {
+    if (files) {
       body.image = []
       for (const index in files) {
         const fileName = `${new Date().getTime()}${index}`
