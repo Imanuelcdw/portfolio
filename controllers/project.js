@@ -29,7 +29,17 @@ class ProjectController {
 
   static update = asyncHandler(async (req, res) => {
     const { slug } = req.params
-    const data = await Project.findOneAndUpdate({ slug }, req.body, { new: true })
+    const { body, files } = req
+    delete body.image
+    if (files || files.length > 0) {
+      body.image = []
+      for (const index in files) {
+        const fileName = `${new Date().getTime()}${index}`
+        const data = await this.uploadFile(files[index], fileName)
+        body.image.push(`https://drive.google.com/uc?id=${data}`)
+      }
+    }
+    const data = await Project.findOneAndUpdate({ slug }, body, { new: true })
     res.status(200).json({ success: true, data })
   })
 
