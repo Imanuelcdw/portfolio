@@ -6,6 +6,6 @@ const router = express.Router()
 const upload = multer()
 
 router.route('/').get(all).post(upload.any(), store)
-router.route('/:slug').get(show).patch(update).delete(destroy)
+router.route('/:slug').get(show).patch(upload.any(), update).delete(destroy)
 
 module.exports = router
